@@ -4,7 +4,7 @@ import time
 from data_manager import DataManager
 from user_service import UserService
 from expense_service import ExpenseService
-from AI_assistant import AIChatAssistant
+from AI_Assistant import AIChatAssistant
 
 
 st.set_page_config(
@@ -110,7 +110,7 @@ if st.session_state["page"] == "login":
         new_role = st.radio("Role", options=["admin", "user"], horizontal=True)
 
         if st.button("Create Account", key="register_btn"):
-            with st.spiMIMISYnner("Creating account..."):
+            with st.spinner("Creating account..."):
                 time.sleep(1)
 
                 success, message = user_service.register_user(
@@ -217,9 +217,20 @@ elif st.session_state["page"] == "add_expense":
 elif st.session_state["page"] == "AI_Chat":
     st.title("AI Assistant 💻")
 
-    st.write("Ask for a spending summary, highest category, or saving advice.")
+    st.write("Ask for a spending summary, highest category, largest expense, or saving advice.")
 
-    user_input = st.text_input("Ask a question")
+    example_prompt = st.selectbox(
+        "Try a prompt",
+        options=[
+            "",
+            "Give me a spending summary",
+            "What category do I spend the most on?",
+            "What is my largest expense?",
+            "Give me saving advice"
+        ]
+    )
+
+    user_input = st.text_input("Ask a question", value=example_prompt)
 
     if st.button("Ask"):
         user_email = st.session_state.user["email"]
@@ -227,7 +238,7 @@ elif st.session_state["page"] == "AI_Chat":
 
         response = ai_assistant.generate_response(user_input, user_expenses)
 
-        st.success(response)
+        st.info(response)
 
 
 elif st.session_state["page"] == "admin":

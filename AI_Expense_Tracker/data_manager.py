@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 class DataManager:
     def __init__(self):
         self.users_path = Path("users.json")
