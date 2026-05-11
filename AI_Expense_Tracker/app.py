@@ -17,8 +17,34 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+html, body, [class*="css"]  {
+    font-family: 'Poppins', sans-serif;
+}
+            
+h1 {
+    text-align: center;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+.stApp {
+    background-color: #faf7ff;
+
+            
+[data-testid="stSidebar"] {
+    background-color: #b39ddb;
+}
+
+[data-testid="stSidebar"] * {
+    color: #2c2c2c;
+}
+
 .stButton > button {
-    background-color: #7c4dff;
+    background-color: #8e63ff;
     color: white;
     border-radius: 10px;
     border: none;
@@ -27,12 +53,23 @@ st.markdown("""
 }
 
 .stButton > button:hover {
-    background-color: #6936f5;
-    color: white;
+    background-color: #7c4dff;
+    color: white;}
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border: 2px solid #c5b3ff;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+hr {
+    border-top: 2px solid #333333;
 }
 
 </style>
 """, unsafe_allow_html=True)
+
+
 
 data_manager = DataManager()
 user_service = UserService(data_manager)
@@ -60,7 +97,7 @@ if st.session_state["page"] in login_guard and not st.session_state["user"]:
 
 with st.sidebar:
     if st.session_state["user"]:
-        st.write(f"Logged in as: {st.session_state['user']['email']}")
+        st.success(f"Logged in as\n{st.session_state['user']['email']}")
 
         if st.button("Dashboard"):
             st.session_state["page"] = "dashboard"
@@ -87,19 +124,6 @@ with st.sidebar:
 
 if st.session_state["page"] == "login":
     st.title("Welcome to AI Expense Tracker")
-
-    st.info("""
-    Test Accounts:
-
-    Admin:
-    Email: admin@test.com
-    Password: 12345
-
-    User:
-    Email: user@test.com
-    Password: 12345
-    """)
-
     st.subheader("Login")
 
     with st.container(border=True):
@@ -147,32 +171,40 @@ if st.session_state["page"] == "login":
 
 
 elif st.session_state["page"] == "dashboard":
-    st.title("💵 AI Expense Dashboard")
+    st.title("💰 AI Expense Dashboard")
     st.divider()
+
 
     user_email = st.session_state.user["email"]
     user_expenses = expense_service.get_user_expenses(user_email)
 
     if len(user_expenses) == 0:
-        st.info("No expenses found")
+        st.info("No expenses yet. Add your first expense to get started.")
     else:
         total_spent, total_transactions, avg = expense_service.get_summary(user_email)
 
         with st.container(border=True):
-            st.subheader("Summary 📋")
+            st.subheader("📋 Summary")
 
             col1, col2, col3 = st.columns(3)
 
-            col1.metric("Total Spent", f"${total_spent:.2f}")
-            col2.metric("Total Transactions", total_transactions)
-            col3.metric("Average Transaction", f"${avg:.2f}")
+            with col1:
+                with st.container(border=True):
+                    st.metric("Total Spent", f"${total_spent:.2f}")
 
+            with col2:
+                with st.container(border=True):
+                    st.metric("Transactions", total_transactions)
+
+            with col3:
+                with st.container(border=True):
+                    st.metric("Average Expense", f"${avg:.2f}")
         st.divider()
 
         category_amounts = expense_service.get_category_totals(user_email)
         highest, lowest = expense_service.get_highest_lowest(user_email)
 
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([3,2])
 
         with col1:
             with st.container(border=True):
@@ -188,24 +220,45 @@ elif st.session_state["page"] == "dashboard":
                 st.subheader("📈 Highest and Lowest Expenses 📉")
 
                 if highest and lowest:
-                    st.write(f"Highest Expense: ${highest['amount']:.2f} - {highest['category']}")
-                    st.write(f"Lowest Expense: ${lowest['amount']:.2f} - {lowest['category']}")
+                   col1, col2 = st.columns(2)
 
-        st.write("---")
+                with col1:
+                    with st.container(border=True):
+                        st.metric(
+                            "Highest Expense 📈",
+                            f"${highest['amount']:.2f}"
+                        )
+                        st.caption(highest["category"])
 
+                with col2:
+                    with st.container(border=True):
+                        st.metric(
+                            "Lowest Expense 📉",
+                            f"${lowest['amount']:.2f}"
+                        )
+                        st.caption(lowest["category"])
+        st.divider()
         st.subheader("All Expenses 🧾")
 
         for expense in user_expenses:
             with st.container(border=True):
                 col1, col2, col3 = st.columns([2, 1, 3])
 
-                col1.write(f"Category: {expense['category']}")
-                col2.write(f"Amount: ${expense['amount']:.2f}")
-                col3.write(f"Note: {expense['note']}")
+            with col1:
+                st.markdown(f"### {expense['category']}")
+
+            with col2:
+                st.metric("Amount", f"${expense['amount']:.2f}")
+
+            with col3:
+                st.write("Note")
+                st.write(expense["note"] if expense["note"] else "No note added")
 
 
 elif st.session_state["page"] == "add_expense":
     st.title("Add New Expense")
+    st.subheader("New Expense Entry")
+    st.divider()
 
     with st.container(border=True):
         amount = st.number_input("Amount", min_value=0.01)
@@ -236,7 +289,8 @@ elif st.session_state["page"] == "add_expense":
 elif st.session_state["page"] == "AI_Chat":
     st.title("AI Assistant 💻")
 
-    st.write("Ask for a spending summary, highest category, largest expense, or saving advice.")
+    st.subheader("Ask for a spending summary, highest category, largest expense, or saving advice.")
+    st.divider()
 
     example_prompt = st.selectbox(
         "Try a prompt",
@@ -264,8 +318,8 @@ elif st.session_state["page"] == "admin":
     if not st.session_state["user"] or st.session_state["user"]["role"].lower() != "admin":
         st.error("This is only accessible to admins")
         st.stop()
-
     st.title("Admin Dashboard 👩‍🏫")
+    st.divider()
 
     users = user_service.users
     user_emails = [user["email"] for user in users]
