@@ -33,6 +33,7 @@ h2, h3 {
 
 .stApp {
     background-color: #faf7ff;
+            
 
             
 [data-testid="stSidebar"] {
@@ -124,6 +125,17 @@ with st.sidebar:
 
 if st.session_state["page"] == "login":
     st.title("Welcome to AI Expense Tracker")
+    st.info("""
+        Test Accounts
+
+        Admin:
+        Email: s.eliz2004@gmail.com
+        Password: 12345
+
+        User:
+        Email: jdoe123@gmail.com
+        Password: 98765
+        """)
     st.subheader("Login")
 
     with st.container(border=True):
@@ -244,15 +256,15 @@ elif st.session_state["page"] == "dashboard":
             with st.container(border=True):
                 col1, col2, col3 = st.columns([2, 1, 3])
 
-            with col1:
-                st.markdown(f"### {expense['category']}")
+                with col1:
+                    st.markdown(f"### {expense['category']}")
 
-            with col2:
-                st.metric("Amount", f"${expense['amount']:.2f}")
+                with col2:
+                    st.metric("Amount", f"${expense['amount']:.2f}")
 
-            with col3:
-                st.write("Note")
-                st.write(expense["note"] if expense["note"] else "No note added")
+                with col3:
+                    st.write("Note")
+                    st.write(expense["note"] if expense["note"] else "No note added")
 
 
 elif st.session_state["page"] == "add_expense":
