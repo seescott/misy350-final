@@ -256,15 +256,15 @@ elif st.session_state["page"] == "dashboard":
             with st.container(border=True):
                 col1, col2, col3 = st.columns([2, 1, 3])
 
-                with col1:
-                    st.markdown(f"### {expense['category']}")
+            with col1:
+                st.markdown(f"### {expense['category']}")
 
-                with col2:
-                    st.metric("Amount", f"${expense['amount']:.2f}")
+            with col2:
+                st.metric("Amount", f"${expense['amount']:.2f}")
 
-                with col3:
-                    st.write("Note")
-                    st.write(expense["note"] if expense["note"] else "No note added")
+            with col3:
+                st.write("Note")
+                st.write(expense["note"] if expense["note"] else "No note added")
 
 
 elif st.session_state["page"] == "add_expense":

@@ -47,5 +47,26 @@
         "amount": 47.99,
         "category": "Transportation",
         "note": "Gas"
+    },
+    {
+        "id": "6b20f6",
+        "email": "johndoe@gmail.com",
+        "amount": 20.0,
+        "category": "Food",
+        "note": "Mcdonalds"
+    },
+    {
+        "id": "b2506e",
+        "email": "johndoe@gmail.com",
+        "amount": 17.99,
+        "category": "Food",
+        "note": "Chipotle"
+    },
+    {
+        "id": "b48778",
+        "email": "johndoe@gmail.com",
+        "amount": 876.0,
+        "category": "Bills",
+        "note": "Rent"
     }
 ]

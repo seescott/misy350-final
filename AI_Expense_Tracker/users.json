@@ -10,5 +10,11 @@
         "email": "s.eliz2004@gmail.com",
         "password": "12345",
         "role": "admin"
+    },
+    {
+        "full_name": "john",
+        "email": "johndoe@gmail.com",
+        "password": "987654",
+        "role": "user"
     }
 ]
