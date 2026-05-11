@@ -3,8 +3,9 @@ from pathlib import Path
 
 class DataManager:
     def __init__(self):
-        self.users_path = Path("users.json")
-        self.expenses_path = Path("expenses.json")
+        BASE_DIR = Path(__file__).parent
+        self.users_path = BASE_DIR / "users.json"
+        self.expenses_path = BASE_DIR / "expenses.json"
 
     def load_users(self):
         if self.users_path.exists():
