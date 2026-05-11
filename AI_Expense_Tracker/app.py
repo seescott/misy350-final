@@ -129,7 +129,7 @@ if st.session_state["page"] == "login":
         Test Accounts
 
         Admin:
-        Email: s.eliz2004@gmail.com
+        Email: sofia@gmail.com
         Password: 12345
 
         User:
