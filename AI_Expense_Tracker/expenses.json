@@ -1,14 +1,14 @@
 [
     {
         "id": "75875a",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 253.0,
         "category": "Bills",
         "note": "Electricity Bill"
     },
     {
         "id": "dfdc9e",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 34.53,
         "category": "Entertainment",
         "note": ""
@@ -22,28 +22,28 @@
     },
     {
         "id": "ccdac4",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 1099.0,
         "category": "Bills",
         "note": "Monthly Rent\n"
     },
     {
         "id": "62a0bd",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 102.54,
         "category": "Food",
         "note": "Grocery Store"
     },
     {
         "id": "5349fd",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 65.89,
         "category": "Entertainment",
         "note": "Phillies ticket"
     },
     {
         "id": "6b9cdc",
-        "email": "s.eliz2004@gmail.com",
+        "email": "sofia@gmail.com",
         "amount": 47.99,
         "category": "Transportation",
         "note": "Gas"
