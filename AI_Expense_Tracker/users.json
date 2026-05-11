@@ -16,5 +16,17 @@
         "email": "johndoe@gmail.com",
         "password": "987654",
         "role": "user"
+    },
+    {
+        "full_name": "Jim Jones",
+        "email": "jjones@udel.edu",
+        "password": "56789",
+        "role": "user"
+    },
+    {
+        "full_name": "Paul Pete",
+        "email": "ppete@yahoo.com",
+        "password": "123456",
+        "role": "user"
     }
 ]

@@ -68,5 +68,89 @@
         "amount": 876.0,
         "category": "Bills",
         "note": "Rent"
+    },
+    {
+        "id": "311faa",
+        "email": "jjones@udel.edu",
+        "amount": 20.0,
+        "category": "Food",
+        "note": "Chipotle"
+    },
+    {
+        "id": "753d89",
+        "email": "jjones@udel.edu",
+        "amount": 73.99,
+        "category": "Entertainment",
+        "note": "Concert"
+    },
+    {
+        "id": "5c7b54",
+        "email": "jjones@udel.edu",
+        "amount": 2099.0,
+        "category": "Bills",
+        "note": "Rent"
+    },
+    {
+        "id": "a1ae63",
+        "email": "jjones@udel.edu",
+        "amount": 650.0,
+        "category": "Bills",
+        "note": "Car Payment"
+    },
+    {
+        "id": "56023e",
+        "email": "ppete@yahoo.com",
+        "amount": 1500.0,
+        "category": "Bills",
+        "note": "Mortgage"
+    },
+    {
+        "id": "0c5224",
+        "email": "ppete@yahoo.com",
+        "amount": 240.0,
+        "category": "Bills",
+        "note": "Car Payment"
+    },
+    {
+        "id": "83d711",
+        "email": "ppete@yahoo.com",
+        "amount": 348.0,
+        "category": "Food",
+        "note": "Grocery Store"
+    },
+    {
+        "id": "a5dda1",
+        "email": "ppete@yahoo.com",
+        "amount": 20.0,
+        "category": "Food",
+        "note": "Dominos"
+    },
+    {
+        "id": "6c10a7",
+        "email": "jdoe123@gmail.com",
+        "amount": 14.99,
+        "category": "Food",
+        "note": "Cava Bowl"
+    },
+    {
+        "id": "054ecd",
+        "email": "jdoe123@gmail.com",
+        "amount": 1800.0,
+        "category": "Bills",
+        "note": "Rent"
+    },
+    {
+        "id": "009080",
+        "email": "jdoe123@gmail.com",
+        "amount": 500.0,
+        "category": "Bills",
+        "note": "Car Insurance"
+    },
+    {
+        "id": "d541ab",
+        "email": "jdoe123@gmail.com",
+        "amount": 237.52,
+        "category": "Other",
+        "note": "Shopping at Mall"
     }
 ]
