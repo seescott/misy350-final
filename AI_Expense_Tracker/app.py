@@ -13,7 +13,26 @@ st.set_page_config(
     page_icon="💰",
     initial_sidebar_state="expanded"
 )
+##AI Assisted style addition for button color
+st.markdown("""
+<style>
 
+.stButton > button {
+    background-color: #7c4dff;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 600;
+}
+
+.stButton > button:hover {
+    background-color: #6936f5;
+    color: white;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 data_manager = DataManager()
 user_service = UserService(data_manager)
@@ -128,8 +147,8 @@ if st.session_state["page"] == "login":
 
 
 elif st.session_state["page"] == "dashboard":
-    st.title("💵 Expense Dashboard 💵")
-    st.write("---")
+    st.title("💵 AI Expense Dashboard")
+    st.divider()
 
     user_email = st.session_state.user["email"]
     user_expenses = expense_service.get_user_expenses(user_email)
