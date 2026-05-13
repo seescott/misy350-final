@@ -42,13 +42,6 @@
         "note": "Phillies ticket"
     },
     {
-        "id": "6b9cdc",
-        "email": "sofia@gmail.com",
-        "amount": 47.99,
-        "category": "Transportation",
-        "note": "Gas"
-    },
-    {
         "id": "6b20f6",
         "email": "johndoe@gmail.com",
         "amount": 20.0,
@@ -86,7 +79,7 @@
     {
         "id": "5c7b54",
         "email": "jjones@udel.edu",
-        "amount": 2099.0,
+        "amount": 500.0,
         "category": "Bills",
         "note": "Rent"
     },
@@ -149,8 +142,15 @@
     {
         "id": "d541ab",
         "email": "jdoe123@gmail.com",
-        "amount": 237.52,
+        "amount": 237.0,
         "category": "Other",
         "note": "Shopping at Mall"
+    },
+    {
+        "id": "d6c4bf",
+        "email": "sofia@gmail.com",
+        "amount": 34.99,
+        "category": "Entertainment",
+        "note": "Saw a Movie"
     }
 ]

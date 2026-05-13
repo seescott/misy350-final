@@ -33,7 +33,7 @@ h2, h3 {
 
 .stApp {
     background-color: #faf7ff;
-            
+}
 
             
 [data-testid="stSidebar"] {
@@ -66,6 +66,25 @@ div[data-testid="stVerticalBlockBorderWrapper"] {
 hr {
     border-top: 2px solid #333333;
 }
+html, body, [class*="css"] {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+            
+            .stButton > button {
+    background-color: #8e63ff;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 12px 22px;
+    font-weight: 600;
+    font-size: 18px;
+}
+            
+            [data-testid="stMetricValue"] {
+    font-size: 36px;
+}
+
 
 </style>
 """, unsafe_allow_html=True)
@@ -149,10 +168,12 @@ if st.session_state["page"] == "login":
             found_user = user_service.login(email, password)
 
             if found_user:
-                st.success(f"Welcome back, {found_user['email']}!")
-                st.session_state["user"] = found_user
-                st.session_state["page"] = "dashboard"
-                st.rerun()
+                if found_user:
+                    st.success(f"Welcome back, {found_user['email']}!")
+                    time.sleep(2)
+                    st.session_state["user"] = found_user
+                    st.session_state["page"] = "dashboard"
+                    st.rerun()
             else:
                 st.error("Invalid credentials")
 
@@ -236,36 +257,69 @@ elif st.session_state["page"] == "dashboard":
 
                 with col1:
                     with st.container(border=True):
-                        st.metric(
-                            "Highest Expense 📈",
-                            f"${highest['amount']:.2f}"
+                        st.markdown(
+                            f"""
+                            <div style='text-align: center; padding: 10px;'>
+                                <h3 style='font-size: 32px;'>Highest Expense 📈</h3>
+                                <h1>${highest['amount']:.2f}</h1>
+                                <p style='font-size: 24px;'>{highest["category"]}</p>
+                            </div>
+                            """,
+                            unsafe_allow_html=True
                         )
-                        st.caption(highest["category"])
 
                 with col2:
                     with st.container(border=True):
-                        st.metric(
-                            "Lowest Expense 📉",
-                            f"${lowest['amount']:.2f}"
+                        st.markdown(
+                            f"""
+                            <div style='text-align: center; padding: 10px;'>
+                                <h3 style='font-size: 32px;'>Lowest Expense 📉</h3>
+                                <h1>${lowest['amount']:.2f}</h1>
+                                <p style='font-size: 24px;'>{lowest["category"]}</p>
+                            </div>
+                            """,
+                            unsafe_allow_html=True
                         )
-                        st.caption(lowest["category"])
         st.divider()
         st.subheader("All Expenses 🧾")
 
+
+##AI Assisted style addition for expense display
         for expense in user_expenses:
             with st.container(border=True):
-                col1, col2, col3 = st.columns([2, 1, 3])
+                col1, col2, col3 = st.columns(3)
 
-            with col1:
-                st.markdown(f"### {expense['category']}")
+                with col1:
+                    st.markdown(
+                        f"""
+                        <div style='text-align: center; padding-top: 10px;'>
+                            <h2>{expense['category']}</h2>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
-            with col2:
-                st.metric("Amount", f"${expense['amount']:.2f}")
+                with col2:
+                    st.markdown(
+                        f"""
+                        <div style='text-align: center;'>
+                            <h4>Amount</h4>
+                            <h2>${expense['amount']:.2f}</h2>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
-            with col3:
-                st.write("Note")
-                st.write(expense["note"] if expense["note"] else "No note added")
-
+                with col3:
+                    st.markdown(
+                        f"""
+                        <div style='text-align: center;'>
+                            <h4>Note</h4>
+                            <p>{expense["note"] if expense["note"] else "No note added"}</p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
 elif st.session_state["page"] == "add_expense":
     st.title("Add New Expense")
@@ -295,36 +349,55 @@ elif st.session_state["page"] == "add_expense":
                     )
 
                 st.success("Expense added!")
+                time.sleep(2)
                 st.rerun()
 
 
 elif st.session_state["page"] == "AI_Chat":
-    st.title("AI Assistant 💻")
 
-    st.subheader("Ask for a spending summary, highest category, largest expense, or saving advice.")
-    st.divider()
+    st.title("AI Spending Assistant")
+    st.subheader("Ask questions about your expenses and spending habits.")
 
-    example_prompt = st.selectbox(
-        "Try a prompt",
-        options=[
-            "",
-            "Give me a spending summary",
-            "What category do I spend the most on?",
-            "What is my largest expense?",
-            "Give me saving advice"
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {
+                "role": "assistant",
+                "content": "Hi! I can help analyze your expenses and spending habits."
+            }
         ]
-    )
 
-    user_input = st.text_input("Ask a question", value=example_prompt)
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
 
-    if st.button("Ask"):
-        user_email = st.session_state.user["email"]
+    user_input = st.chat_input("Ask about your expenses...")
+
+    if user_input:
+
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "content": user_input
+            }
+        )
+
+        with st.chat_message("user"):
+            st.write(user_input)
+
+        user_email = st.session_state["user"]["email"]
         user_expenses = expense_service.get_user_expenses(user_email)
 
         response = ai_assistant.generate_response(user_input, user_expenses)
 
-        st.info(response)
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": response
+            }
+        )
 
+        with st.chat_message("assistant"):
+            st.write(response)
 
 elif st.session_state["page"] == "admin":
     if not st.session_state["user"] or st.session_state["user"]["role"].lower() != "admin":
@@ -353,12 +426,14 @@ elif st.session_state["page"] == "admin":
                     col1.write(f"Amount: ${expense['amount']:.2f}")
                     col2.write(f"Category: {expense['category']}")
                     col3.write(f"Note: {expense['note']}")
-
                     if col4.button("Delete", key=f"delete_{expense['id']}"):
-                        expense_service.delete_expense(expense["id"])
-                        st.success("Expense deleted")
-                        st.rerun()
 
+                        with st.spinner("Deleting expense..."):
+                            time.sleep(1)
+                            expense_service.delete_expense(expense["id"])
+                            st.success("Expense deleted!")
+                            time.sleep(2)
+                            st.rerun()
                     if col4.button("Edit", key=f"edit_{expense['id']}"):
                         st.session_state["edit_expense"] = expense
                         st.session_state["page"] = "edit_expense"
@@ -388,11 +463,13 @@ elif st.session_state["page"] == "edit_expense":
     note = st.text_area("Note (optional)", value=expense["note"])
 
     if st.button("Save Changes"):
-        expense_service.update_expense(
-            expense["id"],
-            amount,
-            category,
-            note
+        with st.spinner("Updating expense..."):
+            time.sleep(1)
+            expense_service.update_expense(
+                expense["id"],
+                amount,
+                category,
+                note
         )
 
         st.success("Expense updated")
