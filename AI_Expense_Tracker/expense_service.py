@@ -24,7 +24,7 @@ class ExpenseService:
         self.expenses.append(new_expense)
         self.data_manager.save_expenses(self.expenses)
 
-    def delete_expense(self, expense_id):
+    def cancel_expense(self, expense_id):
         self.expenses = [
             expense for expense in self.expenses
             if expense["id"] != expense_id

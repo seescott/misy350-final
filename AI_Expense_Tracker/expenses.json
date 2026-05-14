@@ -14,13 +14,6 @@
         "note": ""
     },
     {
-        "id": "8c120e",
-        "email": "jdoe123@gmail.com",
-        "amount": 80.0,
-        "category": "Food",
-        "note": "Grocery Store"
-    },
-    {
         "id": "ccdac4",
         "email": "sofia@gmail.com",
         "amount": 1099.0,

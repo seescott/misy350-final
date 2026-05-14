@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 
+from dotenv import load_dotenv
 from data_manager import DataManager
 from user_service import UserService
 from expense_service import ExpenseService
@@ -41,7 +42,7 @@ h2, h3 {
 }
 
 [data-testid="stSidebar"] * {
-    color: #2c2c2c;
+    color: white;
 }
 
 .stButton > button {
@@ -426,12 +427,12 @@ elif st.session_state["page"] == "admin":
                     col1.write(f"Amount: ${expense['amount']:.2f}")
                     col2.write(f"Category: {expense['category']}")
                     col3.write(f"Note: {expense['note']}")
-                    if col4.button("Delete", key=f"delete_{expense['id']}"):
+                    if col4.button("Cancel", key=f"cancel{expense['id']}"):
 
-                        with st.spinner("Deleting expense..."):
+                        with st.spinner("Cancelling expense..."):
                             time.sleep(1)
-                            expense_service.delete_expense(expense["id"])
-                            st.success("Expense deleted!")
+                            expense_service.cancel_expense(expense["id"])
+                            st.success("Expense Cancelled!")
                             time.sleep(2)
                             st.rerun()
                     if col4.button("Edit", key=f"edit_{expense['id']}"):
